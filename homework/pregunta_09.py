@@ -5,8 +5,24 @@ datos requeridos se encuentran en los archivos `tbl0.tsv`, `tbl1.tsv` y
 librerias de pandas para resolver las preguntas.
 """
 
+import pandas as pd
+import os
 
 def pregunta_09():
+    ruta = os.path.join("files", "input", "tbl0.tsv")
+    df = pd.read_csv(ruta, sep="\t")
+
+    # Convertir la columna 'c3' a tipo datetime, manejando errores
+    df['c3'] = pd.to_datetime(df['c3'], errors='coerce')
+    df['c3'] = df['c3'].fillna(pd.Timestamp("1999-01-01"))
+
+    # Crear columna 'year' como string (el test espera strings)
+    df['year'] = df['c3'].dt.year.astype("Int64").astype(str)
+
+    return df
+
+if __name__ == "__main__":
+    print(pregunta_09())
     """
     Agregue el año como una columna al dataframe que contiene el archivo
     `tbl0.tsv`.

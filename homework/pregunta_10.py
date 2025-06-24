@@ -6,7 +6,22 @@ librerias de pandas para resolver las preguntas.
 """
 
 
+import pandas as pd
+import os 
+
 def pregunta_10():
+    ruta= os.path.join("files", "input", "tbl0.tsv")
+    df = pd.read_csv(ruta, sep="\t")
+
+    # Agrupar por 'c1' y unir los valores de 'c2' separados por ':'
+    df_grouped = df.groupby('c1')['c2'].apply(lambda x: ':'.join(map(str, sorted(x)))).reset_index()
+    df_grouped.set_index('c1', inplace=True)
+
+    return df_grouped
+
+if __name__ == "__main__":
+    print(pregunta_10())
+    
     """
     Construya una tabla que contenga `c1` y una lista separada por ':' de los
     valores de la columna `c2` para el archivo `tbl0.tsv`.

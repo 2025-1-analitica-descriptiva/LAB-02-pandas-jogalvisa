@@ -5,8 +5,20 @@ datos requeridos se encuentran en los archivos `tbl0.tsv`, `tbl1.tsv` y
 librerias de pandas para resolver las preguntas.
 """
 
+import pandas as pd
+import os
 
 def pregunta_11():
+    
+     ruta = os.path.join("files", "input", "tbl1.tsv")
+     df = pd.read_csv(ruta, sep="\t")
+     # Agrupar por 'c0' y unir los valores de 'c4' separados por ','
+     df_grouped = df.groupby('c0')['c4'].apply(lambda x: ','.join(sorted(set(x)))).reset_index()
+
+     return df_grouped
+
+if __name__ == "__main__":
+    print(pregunta_11())
     """
     Construya una tabla que contenga `c0` y una lista separada por ',' de
     los valores de la columna `c4` del archivo `tbl1.tsv`.
